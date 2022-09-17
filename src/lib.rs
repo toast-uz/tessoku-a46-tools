@@ -32,8 +32,9 @@ pub struct Output {
 }
 
 pub fn parse_output(f: &str) -> Result<Output, String> {
-    let ans = match f.split('\n').map(|x| x.parse::<usize>())
-            .collect::<Result<Vec<usize>, std::num::ParseIntError>>() {
+    let ans = match f.split('\n')
+            .filter(|&x| !x.trim().is_empty()).map(|x|
+            x.parse::<usize>()).collect::<Result<Vec<usize>, std::num::ParseIntError>>() {
         Ok(ans) => ans,
         Err(err) => { return Err(err.to_string()); },
     };
